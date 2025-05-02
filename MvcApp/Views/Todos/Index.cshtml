@@ -1,0 +1,75 @@
+@model MvcApp.Features.Todos.List.TodoListViewModel
+@{
+    ViewData["Title"] = "Todo List";
+}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Todo List</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group mb-4">
+                        @if (Model.Todos.Count == 0)
+                        {
+                            <li class="list-group-item text-center text-muted">No todos yet!</li>
+                        }
+                        else
+                        {
+                            @foreach (var todo in Model.Todos)
+                            {
+                                <li class="list-group-item d-flex align-items-center justify-content-between">
+                                    <span class="@(todo.IsCompleted ? "text-decoration-line-through text-muted" : "")">
+                                        @todo.Title
+                                        <span class="badge bg-info ms-2">@todo.Priority</span>
+                                        @if (!string.IsNullOrEmpty(todo.Category))
+                                        {
+                                            <span class="badge bg-warning text-dark ms-1">@todo.Category</span>
+                                        }
+                                        @if (todo.DueDate.HasValue)
+                                        {
+                                            <span class="badge bg-danger ms-1">Due: @todo.DueDate.Value.ToShortDateString()</span>
+                                        }
+                                    </span>
+                                    <div>
+                                        @if (!todo.IsCompleted)
+                                        {
+                                            <form method="post" asp-action="Complete" asp-controller="Todos" style="display:inline">
+                                                <input type="hidden" name="id" value="@todo.Id" />
+                                                <button class="btn btn-sm btn-outline-success me-1" type="submit" title="Complete">
+                                                    <i class="bi bi-check-lg"></i> Complete
+                                                </button>
+                                            </form>
+                                        }
+                                        <form method="post" asp-action="Delete" asp-controller="Todos" style="display:inline">
+                                            <input type="hidden" name="id" value="@todo.Id" />
+                                            <button class="btn btn-sm btn-outline-danger" type="submit" title="Delete">
+                                                <i class="bi bi-trash"></i> Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <span class="badge bg-secondary">@todo.CreatedAt.ToShortDateString()</span>
+                                </li>
+                            }
+                        }
+                    </ul>
+                    <form class="d-flex flex-wrap gap-2 align-items-end" method="post" asp-action="Create">
+                        <input type="text" name="title" class="form-control me-2 mb-2" placeholder="Add a new todo..." required style="max-width:180px;" />
+                        <input type="date" name="dueDate" class="form-control me-2 mb-2" style="max-width:150px;" />
+                        <select name="priority" class="form-select me-2 mb-2" style="max-width:120px;">
+                            <option value="Medium" selected>Medium</option>
+                            <option value="High">High</option>
+                            <option value="Low">Low</option>
+                        </select>
+                        <input type="text" name="category" class="form-control me-2 mb-2" placeholder="Category" style="max-width:120px;" />
+                        <button class="btn btn-success mb-2" type="submit">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

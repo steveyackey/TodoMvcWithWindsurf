@@ -1,0 +1,58 @@
+# .NET build outputs
+bin/
+obj/
+
+# Rider & VSCode
+.idea/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# User secrets
+secrets.json
+
+# SQLite DB
+*.db
+*.db-shm
+*.db-wal
+
+# Test results
+TestResults/
+coverage*
+*.coverage
+*.coveragexml
+
+# Playwright/Browser automation
+playwright-report/
+.playwright/
+
+# Publish outputs
+publish/
+
+# Misc
+_ReSharper*/
+*.ncrunch*
+*.localhistory/
+*.sln.ide
+
+# npm packages (if any JS tooling is added)
+node_modules/
+
+# JetBrains Rider
+.idea/
+
+# Backup files
+*~
+*.bak
+
+# Ignore generated code coverage reports
+coverage.cobertura.xml
